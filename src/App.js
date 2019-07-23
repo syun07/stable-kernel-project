@@ -1,26 +1,51 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { Component } from 'react';
 import './App.css';
+import { Segment } from 'semantic-ui-react';
+import { Route, Switch } from 'react-router-dom';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import NavBar from './components/NavBar';
+import HomePage from './components/HomePage';
+import TestPage from './components/TestPage';
+
+class App extends Component {
+  constructor() {
+    super()
+    this.state = {
+      activeItem: 'HOME'
+    }
+  }
+
+  componentDidMount() {
+    
+  }
+
+  handleItemClick = (e, { name }) => this.setState({ activeItem: name })
+  
+  render() {
+    return (
+      <Segment>
+        
+        <NavBar 
+          activeItem={this.state.activeItem}
+          handleItemClick={this.handleItemClick}  
+        />
+
+        <Switch>
+          <Route exact path="/" render={() =>
+            <HomePage 
+              // send props if necessary
+            />} 
+          />
+          <Route path="/test" render={() => 
+            <TestPage 
+              // send props if necessary
+            />} 
+          />
+        </Switch>
+
+      </Segment>
+    )
+  }
 }
 
 export default App;
